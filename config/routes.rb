@@ -1,7 +1,17 @@
 Blog::Application.routes.draw do
-  devise_for :users
 
-  resources :users
+  resources :posts
+
+
+  get "omniauth_callbacks/facebook"
+
+  get "omniauth_callbacks/twitter"
+
+  devise_for :users, :controllers => {omniauth_callbacks: "users/omniauth_callbacks"}
+
+  resources :users, :only => [:index, :destroy]
+
+  root :to => 'users#index'
 
 
   # The priority is based upon order of creation:
