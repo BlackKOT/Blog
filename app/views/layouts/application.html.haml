@@ -34,12 +34,7 @@
             = yield
           .span3
             .well.sidebar-nav
-              %h3 Providers
-              %ul.nav.nav-list
-                - if !user_signed_in?
-                  %li= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-                  %li= link_to "Sign in with Vkontakte", user_omniauth_authorize_path(:twitter)
-    
+
       %footer
         %p © Company 2013
     = javascript_include_tag "application"
