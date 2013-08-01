@@ -27,6 +27,7 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
 
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -46,6 +47,13 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        case current_user.provider
+          when 'facebook' then FbGraph::User.me(session['fb_access_token']).feed!(:message => @post.body)
+          #when 'twitter'
+        end
+
+
+
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else

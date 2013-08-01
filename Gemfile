@@ -27,6 +27,7 @@ gem 'twitter-bootstrap-rails'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'fb_graph'
 gem 'omniauth-twitter'
 
 # To use ActiveModel has_secure_password
