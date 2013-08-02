@@ -49,7 +49,7 @@ class PostsController < ApplicationController
       if @post.save
         case current_user.provider
           when 'facebook' then FbGraph::User.me(session['fb_access_token']).feed!(:message => @post.body)
-          #when 'twitter'
+          when 'twitter' then current_user.post_tweets(@post.body)
         end
 
 

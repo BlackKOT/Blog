@@ -29,6 +29,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'fb_graph'
 gem 'omniauth-twitter'
+gem 'twitter'
 
 
 group :test do
