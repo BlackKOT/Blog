@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   belongs_to :user
 
   validates :body, :length => { :in => 1..254 }, :allow_blank => false
-  validates :title, :presence => true
+  validates :title, :user_id, :presence => true
 
   def to_param
     "#{id}-#{title.parameterize}"

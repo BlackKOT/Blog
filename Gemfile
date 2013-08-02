@@ -30,6 +30,21 @@ gem 'omniauth-facebook'
 gem 'fb_graph'
 gem 'omniauth-twitter'
 
+
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "capybara-mechanize"
+  gem "database_cleaner"
+  gem "guard-rspec"
+  gem "shoulda-matchers"
+  gem "xpath"
+  gem "rspec-rails"
+  gem 'spork'
+  gem 'faker'
+end
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
