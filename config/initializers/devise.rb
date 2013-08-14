@@ -221,8 +221,17 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 
-  config.omniauth :facebook, 'input Facebook App ID', 'input Facebook Secret key', :scope => 'publish_stream,email,offline_access,manage_pages'
-  config.omniauth :twitter, 'input Twitter App ID', 'input Twitter Secret key'
+  FACEBOOK_KEY =  'WHAT_IS_YOUR_FACEBOOK_KEY'
+  FACEBOOK_SECRET = 'WHAT_IS_YOUR_FACEBOOK_SECRET'
+
+  TWITTER_KEY = 'WHAT_IS_YOUR_TWITTER_KEY'
+  TWITTER_SECRET = 'WHAT_IS_YOUR_TWITTER_SECRET'
+
+
+
+  config.omniauth :facebook, FACEBOOK_KEY, FACEBOOK_SECRET, :scope => 'publish_stream,email,offline_access,manage_pages'
+  config.omniauth :twitter, TWITTER_KEY, TWITTER_SECRET
+
 
 
   # ==> Warden configuration

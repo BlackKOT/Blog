@@ -33,16 +33,19 @@ gem 'twitter'
 
 
 group :test do
-  gem "factory_girl_rails"
-  gem "capybara"
-  gem "capybara-mechanize"
-  gem "database_cleaner"
-  gem "guard-rspec"
-  gem "shoulda-matchers"
-  gem "xpath"
-  gem "rspec-rails"
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'capybara-mechanize'
+  gem 'database_cleaner'
+  gem 'guard-rspec'
+  gem 'shoulda-matchers'
+  gem 'xpath'
+  gem 'rspec-rails'
   gem 'spork'
   gem 'faker'
+  gem 'simplecov', :require => false
+  gem 'simplecov-html', :require => false
+  gem 'mocha', :require => false
 end
 
 

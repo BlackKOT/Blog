@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  class_attribute :twitter_user
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -10,15 +11,14 @@ class User < ActiveRecord::Base
   attr_accessible :nickname, :provider, :url, :username, :token, :token_secret
   has_many :posts
 
-  #CONSUMER_KEY = 'WHAT_IS_YOUR_CONSUMER_KEY'
-  #CONSUMER_SECRET = 'WHAT_IS_YOUR_CONSUMER_SECRET'
-  #ACCESS_TOKEN = 'WHAT_IS_YOUR_ACCESS_TOKEN'
-  #ACCESS_TOKEN_SECRET = 'WHAT_IS_YOUR_ACCESS_TOKEN_SECRET'
+
 
   OPTIONS = {site: "http://api.twitter.com", request_endpoint: "http://api.twitter.com"}
 
   def self.find_for_twitter_oauth(access_token, signed_in_resource=nil)
+    self.twitter_user = access_token
     data = access_token.extra.raw_info
+
     if user = User.where(username: data.screen_name).first
       user
     else # Create a user with a stub password.
@@ -34,10 +34,10 @@ class User < ActiveRecord::Base
 
   def post_tweets(message)
     Twitter.configure do |config|
-      config.consumer_key = User::CONSUMER_KEY
-      config.consumer_secret = User::CONSUMER_SECRET
-      config.oauth_token = ACCESS_TOKEN
-      config.oauth_token_secret = ACCESS_TOKEN_SECRET
+      config.consumer_key = TWITTER_KEY
+      config.consumer_secret = TWITTER_SECRET
+      config.oauth_token = self.class.twitter_user.credentials.token
+      config.oauth_token_secret = self.class.twitter_user.credentials.secret
     end
     client = Twitter::Client.new
     begin

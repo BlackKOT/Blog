@@ -1,15 +1,22 @@
-require 'rubygems'
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'spork'
 
 Spork.prefork do
-  ENV["RAILS_ENV"] ||= 'test'
+
+ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
+
   require 'rspec/rails'
   require 'rspec/autorun'
-  require "capybara/rspec"
+  require 'capybara/rspec'
   require 'database_cleaner'
+  require 'mocha/setup'
 
-  RSpec.configure do |config|
+
+RSpec.configure do |config|
+    OmniAuth.config.test_mode = true
+    #OmniAuth.config.add_mock(:twitter, { :uid => '12345', :info => { :nickname => 'Joe Blow' }})
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = false
     config.infer_base_class_for_anonymous_controllers = false
@@ -37,11 +44,15 @@ Spork.prefork do
 end
 
 Spork.each_run do
+
   FactoryGirl.reload
   I18n.backend.load_translations
 
   Dir["#{Rails.root}/app/**/*.rb"].each {|file| load file }
+
+
   load "#{Rails.root}/config/routes.rb"
+
 end
 
 
