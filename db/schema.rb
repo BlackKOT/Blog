@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731124028) do
+ActiveRecord::Schema.define(:version => 20130821101916) do
+
+  create_table "post_hierarchies", :id => false, :force => true do |t|
+    t.integer "ancestor_id",   :null => false
+    t.integer "descendant_id", :null => false
+    t.integer "generations",   :null => false
+  end
+
+  add_index "post_hierarchies", ["ancestor_id", "descendant_id", "generations"], :name => "tag_anc_desc_udx", :unique => true
+  add_index "post_hierarchies", ["descendant_id"], :name => "tag_desc_idx"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -19,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20130731124028) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
+    t.integer  "parent_id"
+    t.integer  "sort_order"
   end
 
   create_table "users", :force => true do |t|

@@ -30,6 +30,8 @@ gem 'omniauth-facebook'
 gem 'fb_graph'
 gem 'omniauth-twitter'
 gem 'twitter'
+gem 'roman-numerals'
+gem 'closure_tree'
 
 
 group :test do

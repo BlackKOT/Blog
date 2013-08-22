@@ -25,9 +25,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new
-
-
+    @post = Post.new(:parent_id => params[:parent])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -45,8 +43,9 @@ class PostsController < ApplicationController
 
     @post = current_user.posts.new(params[:post])
 
+
     respond_to do |format|
-      if @post.save
+        if (params[:post][:parent] ? (Post.find(params[:post][:parent]).add_child @post) : @post.save)
         case current_user.provider
           when 'facebook' then FbGraph::User.me(session['fb_access_token']).feed!(:message => @post.body)
           when 'twitter' then current_user.post_tweets(@post.body)
