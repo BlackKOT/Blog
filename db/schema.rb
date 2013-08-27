@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821101916) do
+ActiveRecord::Schema.define(:version => 20130827153147) do
 
   create_table "post_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130821101916) do
     t.integer  "user_id"
     t.integer  "parent_id"
     t.integer  "sort_order"
+    t.integer  "old_node"
   end
 
   create_table "users", :force => true do |t|
