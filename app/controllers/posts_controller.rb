@@ -26,6 +26,17 @@ class PostsController < ApplicationController
   # GET /posts/new.json
   def new
     @post = Post.new(:parent_id => params[:parent])
+
+
+    # -------------- mechanize
+    agent = Mechanize.new
+    agent.user_agent_alias = 'Mac Safari'
+    page = agent.get("http://www.google.com/")
+    search_form = page.forms_with(:name=>"f").first
+    search_form.q = "Hello"
+    search_results = agent.submit(search_form)
+    rez = search_results.body
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }

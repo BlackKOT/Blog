@@ -14,12 +14,13 @@ class Post < ActiveRecord::Base
   end
 
   def clone_descendants_to(target_node)
-    self.class.transaction do
+    model = self.class
+    model.transaction do
       self.descendants.each do |node|
-        parent_id = (node.parent_id == self.id) ? target_node : self.class.where(:old_node => node.parent_id).first.id
+        parent_id = (node.parent_id == self.id) ? target_node.id : model.where(:old_node => node.parent_id).first.id
         node.dup.update_attributes(:old_node => node.id, :parent_id => parent_id)
       end
-      self.class.update_all({:old_node => nil}, self.class.arel_table[:old_node].not_eq(nil))
+      model.update_all({:old_node => nil}, model.arel_table[:old_node].not_eq(nil))
     end
   end
 

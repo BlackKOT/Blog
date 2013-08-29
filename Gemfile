@@ -32,6 +32,7 @@ gem 'omniauth-twitter'
 gem 'twitter'
 gem 'roman-numerals'
 gem 'closure_tree'
+gem 'mechanize'
 
 
 group :test do
