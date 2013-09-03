@@ -38,11 +38,18 @@ class Post < ActiveRecord::Base
                                              ORDER BY ordinal_position
         ), ','),'old_node','id')")
 
+      #TODO add in zzzzzzzz... Insert from elephant
       ActiveRecord::Base.connection.execute("
         INSERT INTO #{model}
           SELECT #{sql_get_field_list.first.values[0]} FROM #{model} t
           JOIN #{tree_model} h ON (t.id = h.descendant_id)
           WHERE h.ancestor_id = #{id_source_node} AND t.id != #{id_source_node};
+
+        INSERT INTO #{tree_model}
+          SELECT ancestor_id, id,generations + 1
+          FROM #{tree_model},#{model}
+          WHERE descendant_id = 31 and old_node IS NOT NULL
+        UNION ALL SELECT id,id,0 from #{model} where old_node IS NOT NULL;
 
         UPDATE #{model} t
         SET parent_id = (CASE parent_id
